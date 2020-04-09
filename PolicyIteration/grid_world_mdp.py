@@ -21,8 +21,10 @@ class GridWorldMDP:
         initial_states = [[0]*4]*4
         for index_x,state_x in enumerate(initial_states):
             for index_y,state_y in enumerate(initial_states):
-                for action in ['UP','DOWN','LEFT','RIGHT']:
-                    curr_state = (index_x,index_y)
+                curr_state = (index_x,index_y)
+                if(curr_state in self.terminal_states):
+                        continue
+                for action in self.actions:
                     if(curr_state not in initial_policy):
                         initial_policy[curr_state] = {
                             action:0.25
@@ -51,17 +53,18 @@ class GridWorldMDP:
         pass
 
     def up(self,state):
-        if(state in self.terminal_states):
+        next_step = (state[0],state[1]-1)
+        if(state in self.terminal_states or not self.in_bounds(next_step[0],next_step[1])):
             return state
         else:
-            next_step = (state[0],state[1]+1)
-            if(next_step[1] in range(0,3)):
-                return next_step
-            else:
-                return state
+            return next_step
 
     def down(self,state):
-        pass
+        next_step = (state[0],state[1]+1)
+        if(state in self.terminal_states or not self.in_bounds(next_step[0],next_step[1])):
+            return state
+        else:
+            return next_step
 
     def left(self,state):
         pass
@@ -69,15 +72,22 @@ class GridWorldMDP:
     def right(self,state):
         pass
 
+    def in_bounds(self,x,y):
+        return x in range(0,4) and y in range (0,4)
+
     def __repr__(self):
         matrix = "\n"
         for row in self.states:
             matrix += ' '.join(map(str,row))+"\n"
         return matrix   
 
-
-#pprint(initial_policy)
-#initial_value = [[0]*4]*4
 mdp = GridWorldMDP()
+print("**** Initial Policy for MDP ****")
 pprint(mdp.policy)
+print("**** Initial Value Function for MDP ****")
 print(mdp)
+print("Testing Actions")
+print("Moving up from (1,1) : " + str(mdp.up((1,1)))) #should be 1,0
+print("Moving down from (1,1) : " + str(mdp.down((1,2)))) #should be 1,0
+#print("Moving left from (1,1) : " + str(mdp.left((1,1)))) 
+#print("Moving right from (1,1) : " + str(mdp.right((1,2))))
