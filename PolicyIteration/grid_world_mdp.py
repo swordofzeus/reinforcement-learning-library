@@ -4,7 +4,7 @@ from pprint import pprint
 class GridWorldMDP:
 
     def __init__(self, initial_value=None, initial_policy=None):
-        self.states = [[0]*4]*4
+        self.init_states()
         self.terminal_states = [(0, 0), (3, 3)]
         self.actions = {
             'UP': self.up,
@@ -14,9 +14,15 @@ class GridWorldMDP:
         }
 
         if(not initial_value):
-            self.value = self.states
+            self.value = [[0]*4]*4
         if(not initial_policy):
             self.policy = self.generate_initial_policy()
+
+    def init_states(self):
+        self.states = set()
+        for x in range(0, 4):
+            for y in range(0, 4):
+                self.states.add((x, y))
 
     def generate_initial_policy(self):
         initial_policy = {}
@@ -86,7 +92,7 @@ class GridWorldMDP:
 
     def __repr__(self):
         matrix = "\n"
-        for row in self.states:
+        for row in self.value:
             matrix += ' '.join(map(str, row))+"\n"
         return matrix
 
