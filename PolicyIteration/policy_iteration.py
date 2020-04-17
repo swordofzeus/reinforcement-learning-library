@@ -1,7 +1,6 @@
 import math
-from grid_world_mdp import GridWorldMDP
 from pprint import pprint
-
+from mdp.gridworld.grid_world_mdp import GridWorldMDP
 
 class PolicyIteration():
     ''' 
@@ -13,17 +12,14 @@ class PolicyIteration():
 
     def __init__(self, mdp):
         self.mdp = mdp
-        # self.value_function = initlsial_value_estimate
         self.bellman_error = 0
 
     def update_value_function(self):
         pass
 
     def evaluate_policy(self):
-        # current value function to calculate the current policy - part of the mdp
         current_policy = self.mdp.policy
         current_value_function = self.mdp.value_function
-        # pprint(current_value_function)
         for state in self.mdp.states:
             pprint(state)
 

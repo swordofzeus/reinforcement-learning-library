@@ -13,3 +13,5 @@ An aspect unique to RL is it's temporal notion of time. An agent starts at an in
     2. Investing 10,000 in the market changes the state of your portfolio from cash to company stock.
 
 Another aspect unique to RL is the influence an agent has on its own environment. The amount of future reward an agent can recieve is heavily dependent on the decisions it made in the past. If you make a really bad first move in chess for example, you can play perfectly from then on out but severly limit your ability to win the game because of a poor opening.  
+
+## Markov Decision Processes (MDP's)
