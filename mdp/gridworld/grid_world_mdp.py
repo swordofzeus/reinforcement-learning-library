@@ -1,6 +1,5 @@
 from pprint import pprint
 
-
 class GridWorldMDP:
 
     def __init__(self, initial_value=None, initial_policy=None):
@@ -14,7 +13,7 @@ class GridWorldMDP:
         }
 
         if(not initial_value):
-            self.value = [[0]*4]*4
+            self.value = [[0] * 4 for _ in range(4)]
         if(not initial_policy):
             self.policy = self.generate_initial_policy()
 
@@ -47,11 +46,8 @@ class GridWorldMDP:
     def actions(state):
         self.actions
 
-    def reward(state, action):
-        if(state not in self.terminal_states):
-            return -1
-        else:
-            return 0
+    def reward(self,state, action):
+        return -1
 
     def policy():
         pass
@@ -95,15 +91,3 @@ class GridWorldMDP:
         for row in self.value:
             matrix += ' '.join(map(str, row))+"\n"
         return matrix
-
-
-mdp = GridWorldMDP()
-print("**** Initial Policy for MDP ****")
-pprint(mdp.policy)
-print("**** Initial Value Function for MDP ****")
-print(mdp)
-print("Testing Actions")
-print("Moving up from (1,1) : " + str(mdp.up((1, 1))))  # should be 1,0
-print("Moving down from (1,1) : " + str(mdp.down((1, 1))))  # should be 1,0
-print("Moving left from (1,1) : " + str(mdp.left((1, 1))))
-print("Moving right from (1,1) : " + str(mdp.right((3, 1))))
