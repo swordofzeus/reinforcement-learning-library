@@ -57,8 +57,7 @@ class PolicyIteration():
         for i in range(0, self.max_iter):
             old_value_function = mdp.value
             new_value_function = self.update_value_function()
-            
-            bellman_error = np.max((np.subtract(old_value_function,new_value_function)))
+            bellman_error = abs(np.max((np.subtract(old_value_function,new_value_function))))
             mdp.value = new_value_function
             
             print("MDP Value Function After Iteration {}:\n {}".format(i,mdp))

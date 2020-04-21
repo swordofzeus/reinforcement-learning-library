@@ -40,54 +40,49 @@ class GridWorldMDP:
                         initial_policy[curr_state][action] = 0.25
         return initial_policy
 
-    def states():
-        pass
+    def transition_prbability(self,state,action,next_state):
+        final_state = self.actions[action](state)[0]
+        return 1 if final_state == next_state else 0
 
-    def actions(state):
-        self.actions
 
     def reward(self,state, action):
         return -1
 
-    def policy():
-        pass
-
-    def value_function():
-        pass
-
     def up(self, state):
         next_step = (state[0], state[1]-1)
         if(state in self.terminal_states or not self.in_bounds(next_step[0], next_step[1])):
-            return state
+            return [state]
         else:
-            return next_step
+            return [next_step]
 
     def down(self, state):
         next_step = (state[0], state[1]+1)
         if(state in self.terminal_states or not self.in_bounds(next_step[0], next_step[1])):
-            return state
+            return [state]
         else:
-            return next_step
+            return [next_step]
 
     def left(self, state):
         next_step = (state[0]-1, state[1])
         if(state in self.terminal_states or not self.in_bounds(next_step[0], next_step[1])):
-            return state
+            return [state]
         else:
-            return next_step
+            return [next_step]
 
     def right(self, state):
         next_step = (state[0]+1, state[1])
         if (state is self.terminal_states or not self.in_bounds(next_step[0], next_step[1])):
-            return state
+            return [state]
         else:
-            return next_step
+            return [next_step]
 
     def in_bounds(self, x, y):
         return x in range(0, 4) and y in range(0, 4)
 
     def __repr__(self):
-        matrix = "\n"
+        matrix = ""
         for row in self.value:
-            matrix += ' '.join(map(str, row))+"\n"
+            for value in row:
+                matrix += '{:0.2f}\t'.format(value)
+            matrix+="\n"
         return matrix
