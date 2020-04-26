@@ -53,19 +53,17 @@ class PolicyIteration():
         for state in self.mdp.states:
             if(state in self.mdp.terminal_states):
                 continue
-            q = 0
             new_action_qs = {}
 
             for action in self.mdp.actions:
+                q = 0
                 new_states = self.mdp.actions[action](state)
-                pprint(new_states)
 
                 for state_prime in new_states:
                     q += new_value_function[state_prime[0]
                                             ][state_prime[1]] * self.mdp.transition_prbability(state, action, state_prime)
                     new_action_qs[action] = q
 
-            pprint(new_action_qs)
             max_q = max(new_action_qs, key=new_action_qs.get)
             new_action_qs = {k: v for k,
                              v in new_action_qs.items() if v == new_action_qs[max_q]}
@@ -73,6 +71,7 @@ class PolicyIteration():
             for k in new_action_qs.keys():
                 new_action_qs[k] = 1 / len(new_action_qs)
             new_policy[state] = new_action_qs
+
         pprint(new_policy)
         exit()
 
@@ -100,5 +99,5 @@ class PolicyIteration():
 
 if __name__ == "__main__":
     mdp = GridWorldMDP()
-    PolicyIteration(mdp, max_iter=100,
+    PolicyIteration(mdp, max_iter=3,
                     bellman_tolerance=0.01).find_optimal_policy()
