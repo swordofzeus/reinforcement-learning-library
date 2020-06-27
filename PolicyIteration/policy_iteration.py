@@ -20,10 +20,9 @@ class PolicyIteration():
         self.bellman_tolerance = bellman_tolerance
         self.bellman_error = 0
 
-    def update_value_function(self):
-        pass
-
     def one_step_lookahead(self, state):
+        '''Iterates through all actions of a given state and returns an expectation of the updated
+        value function for an input State, using Bellman Expectation Equation'''
         updated_value = 0
         for action in self.mdp.actions:
             '''Invoke an action, and determine a list of possible new states we can end up in'''
@@ -38,6 +37,9 @@ class PolicyIteration():
         return updated_value
 
     def update_value_function(self):
+        ''' Iterates through all states in MDP and updates the value function
+            with a one step lookahead
+        '''
         current_policy = self.mdp.policy
         current_value_function = copy.deepcopy(self.mdp.value)
         for state in self.mdp.states:
@@ -47,34 +49,44 @@ class PolicyIteration():
             current_value_function[state[0]][state[1]] = new_value
         return current_value_function
 
+    
+    def find_greedy_actions(self,state,new_value_function):
+        '''Returns actions that maximizes value based on current policy'''
+        max_actions = [(None,-math.inf)]
+        for action in self.mdp.actions:
+            q = 0
+            new_states = self.mdp.actions[action](state)
+            for state_prime in new_states:
+                '''Update action value for each state by multiplying 
+                   the long term value of each successor state by the probability of ending up in that future state'''
+                q += new_value_function[state_prime[0]
+                                ][state_prime[1]] * self.mdp.transition_prbability(state, action, state_prime)
+            
+            '''Act greedily, by selection actions that maximize q'''
+            if(q > max_actions[0][1]):
+                max_actions = [(action,q)]
+            elif(q == max_actions[0][1]):
+                max_actions.append((action,q))
+        return max_actions
+
+    
+    
+    
     def improve_policy(self, new_value_function):
+        '''Iterates through all states, and updates the policy with the action 
+           that maximizes value. '''
 
         new_policy = {}
         for state in self.mdp.states:
             if(state in self.mdp.terminal_states):
                 continue
             new_action_qs = {}
-
-            for action in self.mdp.actions:
-                q = 0
-                new_states = self.mdp.actions[action](state)
-
-                for state_prime in new_states:
-                    q += new_value_function[state_prime[0]
-                                            ][state_prime[1]] * self.mdp.transition_prbability(state, action, state_prime)
-                    new_action_qs[action] = q
-
-            max_q = max(new_action_qs, key=new_action_qs.get)
-            new_action_qs = {k: v for k,
-                             v in new_action_qs.items() if v == new_action_qs[max_q]}
-
-            for k in new_action_qs.keys():
-                new_action_qs[k] = 1 / len(new_action_qs)
+            greedy_action = self.find_greedy_actions(state,new_value_function)
+            for curr_max_action in greedy_action:
+                new_action_qs[curr_max_action[0]] = 1 / len(greedy_action) 
             new_policy[state] = new_action_qs
 
         pprint(new_policy)
-        exit()
-
         return new_action_qs.keys()
 
     def find_optimal_policy(self):
