@@ -48,8 +48,9 @@ class PolicyIteration(Planning):
         return current_value_function
 
     def find_optimal_policy(self):
-        new_value_function = self.evaluate_policy()
-        new_policy = self.find_greedy_policy(new_value_function)
+        for i in range(0,self.max_iter):
+            new_value_function = self.evaluate_policy()
+            new_policy = self.find_greedy_policy(new_value_function)
         return new_policy
 
     def evaluate_policy(self):

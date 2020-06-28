@@ -4,6 +4,13 @@ from pprint import pprint
 import logging
 
 class Planning():
+    '''
+    @author ashish juneja
+    @author jai kumar
+    Planning type problems are ones where the environment dynamics are known and learning happens through
+    repeated updates to the state value function Value function V(s). Policy Iteration and Value Iteration are algorithms which use planning
+    to solved a Markov Decision Process.
+    '''
     def __init__(self, mdp, max_iter, bellman_tolerance):
       self.mdp = mdp
       self.max_iter = max_iter

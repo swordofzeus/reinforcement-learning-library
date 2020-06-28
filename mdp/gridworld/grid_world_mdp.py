@@ -2,6 +2,13 @@ from pprint import pprint
 
 
 class GridWorldMDP:
+    '''
+        Sample 4x4 Grid world as described in David Silvers 3rd RL Lecture.
+        Consists of 4 actions, UP,DOWN,LEFT,RIGHT. Fully deterministic, transition probability is 1.0 for an action (i.e. UP will always 
+        move up.). Default initial policy is uniform random.
+        @author ashish juneja
+        @author jai kumar
+    '''
     def __init__(self,
                  initial_value=None,
                  initial_policy=None,

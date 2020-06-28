@@ -40,7 +40,7 @@ class ValueIteration(Planning):
         self.bellman_error = abs(
         np.max((np.subtract(self.mdp.value, new_value_function))))
         self.mdp.value = new_value_function
-        logging.info("MDP Value Function After Iteration {}:\n {}".format(curr_iter, mdp))
+        logging.info("MDP Value Function After Iteration {}:\n {}".format(curr_iter, self.mdp))
       final_policy = self.find_greedy_policy(self.mdp.value)
       logging.info(final_policy)
       return final_policy
